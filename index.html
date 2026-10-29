@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>React UMD Test</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 80px auto; padding: 0 20px; }
+    button { font: inherit; margin-right: 8px; padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div id="root">正在加载 React，请确认网络可访问 unpkg.com。</div>
+  <noscript>请启用 JavaScript 后使用此页面。</noscript>
+
+  <!-- 固定版本，先加载 React，再加载 ReactDOM 的 UMD 构建。 -->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js"></script>
+  <script>
+    if (window.React && window.ReactDOM) {
+      const h = React.createElement;
+
+      function App() {
+        const [count, setCount] = React.useState(0);
+        return h('main', null,
+          h('h1', null, 'React UMD Test'),
+          h('p', null, 'React ' + React.version + ' · 无需构建，直接运行'),
+          h('p', { role: 'status' }, '计数：' + count),
+          h('button', { onClick: () => setCount(value => value + 1) }, '+1'),
+          h('button', { onClick: () => setCount(0) }, '重置')
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+    } else {
+      document.getElementById('root').textContent =
+        'React 加载失败，请检查网络连接后刷新页面。';
+    }
+  </script>
+</body>
+</html>
+
